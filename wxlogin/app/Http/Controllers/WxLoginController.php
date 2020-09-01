@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class WxLoginController extends Controller{
 
+
+    public function yemian(){
+        return view('wx/login');
+    }
+
     public function wxLogin(Request $request)
     {
         //获取code

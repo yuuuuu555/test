@@ -69,6 +69,7 @@ Route::any('response', 'stuController@response');
 Route::group(['middlewqre' => 'web'], function () {
     Route::any('wxLogin', 'WxLoginController@wxLogin');
     Route::any('wxRegister', 'WxLoginController@wxRegister');
+    Route::any('login', 'WxLoginController@yemian');
 });
 
 
