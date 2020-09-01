@@ -1,0 +1,421 @@
+
+<link rel="stylesheet" href="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/style/user/user.css" media="all">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>用户中心</title>
+  <meta name="keywords" content="高防服务器,云服务器,服务器托管" />
+  <meta name="description" content="群英专业15年高防IDC服务商,主营高防服务器、服务器租用托管、云服务器、域名主机等业务.全新二代智能平台.群防超过1500G盾,BGP神级防护线路." />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+   
+  <link rel="stylesheet" href="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/style/login.css" media="all">
+  <link rel="stylesheet" href="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/style/common/common.css" media="all">
+  
+</head>
+<body class="">
+  <div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+      <div class="layui-header theme_bg_color">
+        <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-left" lay-filter="layadmin-layout-right">
+         <li class="layui-nav-item " lay-unselect="">
+            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+              <i class="layui-icon layui-icon-spread-left font_size_22" id="LAY_app_flexible"></i>
+            </a>
+          </li>
+        </ul>
+        <!-- <p class="title" id="qy-title"></p> -->
+        <p class="header_logo_title"><a href="https://m.qy.cn" class="index_link"></a></p>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+          <li class="layui-nav-item" lay-unselect="">
+                          <a href="javascript:;" onclick="displayUserMenu()">
+                <i class="layui-icon layui-icon-username qy_white_color font_size_22px"></i>  
+             </a>
+                        </li>
+        </ul>
+      </div>
+      <div class="menubanner" style="display: none;">
+        <div class="menubox">
+                <!-- <div class="menu-item"> -->
+                    <!-- <div class="menu-item-title"> -->
+                <a href="https://m.qy.cn/user/pay">
+                充值
+                <i class="layui-icon layui-icon-right qy_white_color font_size_14 layui-layout-right"></i>  
+                </a>
+
+                    <!-- </div> -->
+                <!-- </div> -->
+                <a href="https://m.qy.cn/user">
+                个人中心
+                <i class="layui-icon layui-icon-right qy_white_color font_size_14 layui-layout-right"></i>  
+                 </a>
+               
+                <a href="https://m.qy.cn/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                    <span></span>
+                退出
+                    <form id="logout-form" action="https://m.qy.cn/logout" method="post">
+                    <input type="hidden" name="_token" value="oCRau56AAEmhpjoOP8D0Hk4unQDzQ9CVIcAuDPsa">
+                    </form>
+            </a>
+        </div>
+    </div>
+      <!-- 侧边菜单 -->
+      <div class="layui-side layui-side-menu">
+        <div class="layui-side-scroll" >
+          <a class="layui-logo"  href="https://m.qy.cn" >
+          </a>
+          <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+            <li class="layui-nav-item"><a href="https://m.qy.cn">首页</a></li>
+            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="云计算" lay-direction="2">
+                <cite class="theme_color"><b>云计算</b></cite>
+              <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                <dd data-name="console" class="layui-this">
+                  <a href="https://m.qy.cn/qycloud/productlist">鹰云·性价王</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/yycloud/productlist">鹰云</a>
+                </dd>
+              </dl>
+            </li>
+
+             <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="云安全" lay-direction="2">
+                <cite class="theme_color"><b>云安全</b></cite>
+              <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                <dd data-name="gfcloud" class="layui-this">
+                  <a href="https://m.qy.cn/gfcloud/productlist">高防云</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/zfxt/productlist">智防系统</a>
+                </dd>
+                <dd data-name="gfip">
+                  <!-- <a href="https://m.qy.cn/dlist2">高防IP</a> -->
+                  <a href="https://m.qy.cn/gfip/productlist">高防IP</a>
+                </dd>
+                <dd data-name="gfserver">
+                  <a href="https://m.qy.cn/dlist">高防服务器</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/hwgf/productlist">海外高防服务器</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="租用托管" lay-direction="2">
+                <cite class="theme_color"><b>租用托管</b></cite>
+              <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                <dd data-name="服务器租用" class="layui-this">
+                  <a href="https://m.qy.cn/zy">服务器租用</a>
+                </dd>
+                <dd data-name="服务器托管">
+                  <a href="https://m.qy.cn/tg">服务器托管</a>
+                </dd>
+                <dd data-name="机柜带宽">
+                  <a href="https://m.qy.cn/jg">机柜带宽</a>
+                </dd>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="域名主机" lay-direction="2">
+                <cite class="theme_color"><b>域名主机</b></cite>
+              <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                <dd data-name="console" class="layui-this">
+                  <a href="https://m.qy.cn/xnzj/productlist">虚拟主机</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/ymzc/productlist">域名注册</a>
+                </dd>
+              </dl>
+            </li>
+
+             <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="关于我们" lay-direction="2">
+                <cite class="theme_color"><b>关于我们</b></cite>
+              <span class="layui-nav-more"></span></a>
+              <dl class="layui-nav-child">
+                <dd data-name="console" class="layui-this">
+                  <a href="https://m.qy.cn/about/aboutus">公司简介</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/newsList">新闻动态</a>
+                </dd>
+                <dd data-name="console">
+                  <a href="https://m.qy.cn/about/contact">联系我们</a>
+                </dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="layui-body">
+	  
+<div class="userCenter">
+        <div class="top_tips has_mbottom">
+        <a href="https://m.qy.cn/user/certificate-auth" class="font_size_14">为保证您的账户及资源的所属权安全，建议您优先完成实名认证。点击前往验证&gt;&gt;</a>
+    </div>
+        <div class="user_info_wrap">
+        <a class="user_info" href="https://m.qy.cn/user/setting">
+            <i class="common_avatar fl_l" >
+
+            </i>
+            <div class="user_text fl_l">
+                <p class="auth_statue">
+                  <i class="auth_unauth"></i>
+                  <i class="inauth"></i>
+                  <i class="auth_pass"></i>
+                  <i class="authfail"></i>
+                </p>
+                <p class="name_phone">
+                    <span class="name">QY2893842</span>
+                    <span class="phone qy_grey">(13318514577)</span>
+                </p>
+                <p class="com_verify">
+                  <label>ID:</label>
+                  <span>616621</span>
+                </p>
+            </div>
+            <i class="layui-icon layui-icon-right qy_grey layui-layout-right"></i>  
+        </a>
+        <div class="finance_wrap">
+            <div class="remain fl_l">
+                <p class="num">0</p>
+                <label>账户余额(元)</label>
+            </div>
+            <div class="coupon fl_l">
+              <a href="https://m.qy.cn/user/couponList?status=1">
+                <p class="num">0</p>
+                <label>优惠券(张)</label>
+              </a>  
+            </div>
+            <div class="renew fl_l">
+                <p class="num">0.00</p>
+                <label>急需续费</label>
+            </div>
+        </div>
+        <div class="customer_server">
+            
+            <a class="kf_link" href="mqqwpa://im/chat?chat_type=wpa&uin=3004396700&version=1&src_type=web&web_src=m.qy.cn" target="_blank">
+              <i class="icon_kf"></i>
+            <span>专属客服</span>
+          </a>
+          <a class="kf_link margin_left_10" href="mqq://im/chat?chat_type=wpa&uin=4006784567&version=1&src_type=web&web_src=slp.baidu.com" target="_blank">
+            <span>售后客服</span>
+          </a>
+            <a onclick="javascript:top.location.href='https://m.qy.cn/user/pay'" class="charge_btn fl_r">充值</a>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space1 product_wrap">
+      <div class="layui-col-xs4">
+        <!-- 填充内容 -->
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+            <a href="https://m.qy.cn/user/products/1">
+                <i class="icon_server_cloud">
+                </i>
+              <p>鹰云性价王</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+            <a href="https://m.qy.cn/user/products/3">
+                <i class="icon_gfcloud">
+                </i>
+              <p>高防云</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+            <a href="https://m.qy.cn/user/products/4">
+                <i class="icon_yycloud">
+                </i>
+              <p>鹰云</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+            <a href="https://m.qy.cn/user/gfip-index">
+              <!-- <a onclick="showBuilding();"> -->
+                <i class="icon_gfIP">
+                </i>
+              <p>高防IP</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+             <a onclick="showBuilding();" href="javascript:void(0)">
+                <i class="icon_zfxt">
+                </i>
+              <p>智防系统</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 2.24rem;">
+              <a href="https://m.qy.cn/user/products/2">
+                <i class="icon_tg">
+                </i>
+              <p>租用托管</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--<div class="layui-col-xs4">
+        <div class="layui-card">
+          <div class="layui-card-body" style="height: 84px;">
+              <a href="https://m.qy.cn/user/products/110">
+                <i class="icon_whitelist">
+                </i>
+              <p>白名单</p>
+            </a>
+          </div>
+        </div>
+      </div>-->
+    </div>
+
+    <div class="layui-row layui-col-space1 other_link">
+      <ul class="qy_list">
+        <li>
+          <a href="https://m.qy.cn/user/vvCloud/index">
+            裸金属
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+        <li>
+          <a href="https://m.qy.cn/user/auth-index">
+            实名认证
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+        <li class="list_item">
+          <a href="https://m.qy.cn/user/flow/index">
+            财务流水
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+        <li>
+          <a href="https://m.qy.cn/user/orders/1">
+            订单管理
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+        <li>
+          <a href="https://m.qy.cn/user/whitelist">
+            白名单
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+        <li>
+          <a href="https://m.qy.cn/user/gfip-forward">
+            新高防IP转发
+            <span class="layui-icon layui-icon-right fl_r"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+
+    </div>
+    <div class="layadmin-body-shade" layadmin-event="shade">
+        <i class="layui-icon layui-icon-close qy_white_color close_left_menu"></i>
+     </div>
+  </div>
+    <!-- Scripts -->
+		<script src="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/layui/layui.js"></script>
+  <script type="text/javascript" src="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/lib/common/flexible.js"></script>
+  <script src="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/lib/common/common.js"></script>
+  <script src="https://m.qy.cn/mobile/lib/layui/src/layuiadmin/lib/module/user/user.js"></script>
+	<script>
+		  layui.config({
+		base: "/mobile/lib/layui/src/layuiadmin/" //静态资源所在路径
+		,version: 1597658710 //'1.1.0'
+	  }).extend({
+		index: 'lib/index' //主入口模块
+	  }).use('index');
+
+	  layui.use(['index'], function(args){
+	  	var $ = layui.$;
+        var title = '';
+            title = $(window.document).attr("title");
+            if( title ){
+            	$(window.parent.document).attr("title",title);
+            	$(window.parent.document).find('#qy-title').html(title);
+            }
+	  });
+	</script>
+    
+<script>
+layui.use(['index', 'form', 'admin'], function(args){
+  var $ = layui.$
+    ,form = layui.form
+    ,admin = layui.admin
+    ,element = layui.element
+    ,layer = layui.layer;
+
+          layer.open({
+        title: '实名认证',
+        content: ' 根据《中华人民共和国网络安全法》等网络安全相关法律法规规定，以及有关监管单位的要求，接入用户须完成用户实名认证及手持身份证拍照才能使用相关产品服务。请您认真填写相关实名认证信息，完成实名认证申请。',
+        Boolean:'false',
+        closeBtn :0,
+        btn: ['前往实名认证'],
+        success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').css({
+                background: '#f96868'
+                ,border: '#f96868'
+            });
+        },
+
+        yes: function(index, layero){
+             window.location.href = "https://m.qy.cn/user/certifyIndex";
+        }
+      });
+    
+  $(document).ready(function(e) {
+  if (window.history && window.history.pushState) {
+    $(window).on('popstate', function () {
+      window.history.pushState('forward', null, '#');
+      window.history.forward(1);
+      window.location.reload();
+      //window.location.href = '/';//指定跳转URL
+    });
+  }
+    window.history.pushState('forward', null, '#');
+    window.history.forward(1);
+  });
+
+
+
+  });
+</script>
+</body>
+</html>
+
