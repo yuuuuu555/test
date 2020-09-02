@@ -14,7 +14,7 @@
     <td>请选择绑定还是新账号</td>
     <div class="form-group"><label for="id" class="col-sm-2 control-label">账号</label>
         <div class="col-sm-5">
-            <input type="text" name="wx_id" 
+            <input type="text" name="Users[wx_id]" 
                 value="" class="form-control"
                 id="wx_id" placeholder="请输入"></div>
         <div class="col-sm-5">
@@ -23,9 +23,18 @@
     </div>
     <div class="form-group"><label for="id" class="col-sm-2 control-label">密码</label>
         <div class="col-sm-5">
-            <input type="text" name="wx_password" 
+            <input type="text" name="Users[password]" 
                 value="" class="form-control"
-                id="wx_password" placeholder="请输入"></div>
+                id="password" placeholder="请输入"></div>
+        <div class="col-sm-5">
+            <p class="form-control-static text-danger"></p>
+        </div>
+    </div>
+    <div class="form-group"><label for="id" class="col-sm-2 control-label">手机号码</label>
+        <div class="col-sm-5">
+            <input type="text" name="Users[telephone]" 
+                value="" class="form-control"
+                id="telephone" placeholder="请输入"></div>
         <div class="col-sm-5">
             <p class="form-control-static text-danger"></p>
         </div>
@@ -42,10 +51,6 @@
 
 
 ?>
-
-
-
-
 
 </form>
 </body>

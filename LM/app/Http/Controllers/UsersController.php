@@ -12,7 +12,7 @@ class UsersController extends Controller
     {
         //分页
         $userss = Users::paginate(10);
-        
+
         return view('users/index', [
             'userss' => $userss,
         ]);
@@ -52,31 +52,33 @@ class UsersController extends Controller
             //     ]
             // );
 
-            $validator = \Validator::make($request->input(),[
-                        //限制条件
-                        'Users.name' => 'required|min:2|max:20',
-                        'Users.age' => 'required|integer',
-                        'Users.sex' => 'required|integer'
-                    ],
-                    [
-                        //翻译
-                        'required' => ':attribute 为必填项',
-                        'min' => ':attribute 最少为2个字符',
-                        'max' => ':attribute 超出字符限制',
-                        'integer' => ':attribute 必须是整数'
-                        // 'required' => ':attribute 为必填项',
-                        // 'required' => ':attribute 为必填项'
-                    ],
-                    [
-                        //翻译
-                        'Users.name' => '姓名',
-                        'Users.age' => '年龄',
-                        'Users.sex' => '性别',
-                    ]
-                    );
-                    if($validator->fails()){
-                        return redirect()->back()->withErrors($validator)->withInput();
-                    }
+            $validator = \Validator::make(
+                $request->input(),
+                [
+                    //限制条件
+                    'Users.name' => 'required|min:2|max:20',
+                    'Users.age' => 'required|integer',
+                    'Users.sex' => 'required|integer'
+                ],
+                [
+                    //翻译
+                    'required' => ':attribute 为必填项',
+                    'min' => ':attribute 最少为2个字符',
+                    'max' => ':attribute 超出字符限制',
+                    'integer' => ':attribute 必须是整数'
+                    // 'required' => ':attribute 为必填项',
+                    // 'required' => ':attribute 为必填项'
+                ],
+                [
+                    //翻译
+                    'Users.name' => '姓名',
+                    'Users.age' => '年龄',
+                    'Users.sex' => '性别',
+                ]
+            );
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
 
             //用$request指向在页面获取到的Users并赋值给$date
@@ -90,8 +92,8 @@ class UsersController extends Controller
             }
         }
         // dd($users);
-        return view('users/create',[
-            'users' =>$users,
+        return view('users/create', [
+            'users' => $users,
         ]);
     }
 
@@ -116,13 +118,14 @@ class UsersController extends Controller
             return redirect()->back();
         }
     }
-    
+
     // 修改
     // requeste获取post请求 页面要有methon=post
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $users = Users::find($id);
 
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             // 验证
             $this->validate(
                 $request,
@@ -157,31 +160,44 @@ class UsersController extends Controller
             $users->age = $date['age'];
             $users->sex = $date['sex'];
 
-            if($users->save()){
-                return redirect('usersIndex')->with('success', '修改成功！' );
+            if ($users->save()) {
+                return redirect('usersIndex')->with('success', '修改成功！');
             }
         }
-        
-        return view('users/update', [
-            'users'=>$users
-        ]);
-    }
-    //详情
-    public function detail($id){
-        $users = Users::find($id);
-        
 
-        return view('users.detail',[
+        return view('users/update', [
             'users' => $users
         ]);
     }
-    public function delete($id){
+    //详情
+    public function detail($id)
+    {
         $users = Users::find($id);
 
-        if($users->delete()){
-            return redirect('usersIndex')->with('success', '删除成功'. $id);
-        }else{
-            return redirect('usersIndex')->with('error', '删除失败'. $id);
+
+        return view('users.detail', [
+            'users' => $users
+        ]);
+    }
+    public function delete($id)
+    {
+        $users = Users::find($id);
+
+        if ($users->delete()) {
+            return redirect('usersIndex')->with('success', '删除成功' . $id);
+        } else {
+            return redirect('usersIndex')->with('error', '删除失败' . $id);
+        }
+    }
+
+    public function select(Request $request)
+    {
+
+        if ($request->isMethod('POST')) {
+            $num = Users::where('$request')
+                ->get();
+
+            dd($num);
         }
     }
 }

@@ -12,7 +12,7 @@
     // // $SECRET = "24e3c07754c537d91c75c341498ac2f3"
     // $REDIRECT_URI = "http://wuliyuyu.nat100.top/phpcode/laravel6/public/wxLogin"
     ?>
-    <a href = "https://open.weixin.qq.com/connect/qrconnect?appid=wx79f23dab2d44d225&redirect_uri=http://wuliyuyu.nat100.top/phpcode/laravel6/public/wxLogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect">
+    <a href = "https://open.weixin.qq.com/connect/qrconnect?appid=wx7d426736f2f94cc7&redirect_uri=https://www.qy.cn&response_type=code&scope=token&state=sesstion#wechat_redirect">
 
         <button>
             微信登陆</button>
