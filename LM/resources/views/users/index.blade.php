@@ -1,8 +1,7 @@
 @extends('common/layouts')
 @section('content')
     @include('common/message')
-    @yield('select')
-    @include('common/select')
+    @include('common/selectU')
     <div class="panel panel-default">
         <div class="panel-heading">用户列表</div>
         <table class="table table-striped table-hover table-responsive">
@@ -42,7 +41,6 @@
             {{ $userss->render() }}
         </ul>
     </div>
-
     </div>
 
 @stop

@@ -1,7 +1,7 @@
 @extends('common/layouts')
 @section('content')
     @include('common/message')
-
+    @include('common/selectB')
     <div class="panel panel-default">
         <div class="panel-heading">书籍列表</div>
         <table class="table table-striped table-hover table-responsive">

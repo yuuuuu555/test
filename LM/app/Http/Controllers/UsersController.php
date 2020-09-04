@@ -182,31 +182,98 @@ class UsersController extends Controller
     public function delete($id)
     {
         $users = Users::find($id);
-
         if ($users->delete()) {
             return redirect('usersIndex')->with('success', '删除成功' . $id);
         } else {
             return redirect('usersIndex')->with('error', '删除失败' . $id);
         }
     }
-
-    public function select(Request $request)
+    //查名字    
+    public function selectName(Request $request)
     {
-        // $userss = Users::paginate(10);
+        //                                                    代码的减少？？
         // 回传数据后在数据库查找有无对应的信息并获取
-        if ($request->isMethod('GET')) {
-            $num = $request ->input('age');
-            dd($num);
-            // $userss = Users::where(users[$request])
-            //     ->get();
-            //     if(!empty($userss)){
-            //         return view('users/index', [
-            //             'userss' => $userss,
-            //         ]);
-            //     }else{
-            //         echo 'fu';
-            //     }
-                
+        if ($request->isMethod('get')) {
+            // 限定传入的值不能为空
+            $validator = \Validator::make(
+                $request->input(),
+                [
+                    //限制条件
+                    'Users.data' => 'required'
+                ]
+            );
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            if (!empty($request)) {
+                //将页面存在Users[..]里的数据放到$users里
+                $users = $request->input('Users');
+                // dd($users);
+                if (!empty($users['data'])) {
+                    $num = $users['data'];
+                    // dd($num);
+                    // 从数据库获得对应数据
+                    $userss = Users::where('name', $num)
+                        ->get();
+                    // dd($userss);
+
+                    // 判断有无某项数据，否则查无此人
+                    if (!empty($userss['id'])) {
+                        // dd($userss);
+                        // 分页
+                        $userss = $userss -> paginate(10);
+                        return view('users/index', [
+                            'userss' => $userss,
+                        ]);
+                    } else {
+                        return redirect('usersIndex')->with('error', '查无此人');
+                    }
+                }
+            } else {
+                return redirect('usersIndex')->with('error', '查无此人');
+            }
+        }
+    }
+    //id查询
+    public function selectID(Request $request)
+    {
+        //                                                    代码的减少？？
+        // 回传数据后在数据库查找有无对应的信息并获取
+        if ($request->isMethod('get')) {
+            $validator = \Validator::make(
+                $request->input(),
+                [
+                    //限制条件
+                    'Users.data' => 'required'
+                ]
+            );
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            //将页面存在Users[..]里的数据放到$users里
+            $users = $request->input('Users');
+            // dd($users);
+            //查名字
+            if (!empty($users['data'])) {
+                $num = $users['data'];
+                // dd($num);
+                // 从数据库获得对应数据
+                $userss = Users::where('id', $num)
+                    ->get();
+                // dd($userss);
+
+                // 判断有无某项数据，否则查无此人
+                if (!empty($userss['name'])) {
+                    // dd($userss);
+                    // 分页
+                    $userss = $userss -> paginate(10);
+                    return view('users/index', [
+                        'userss' => $userss,
+                    ]);
+                } else {
+                    return redirect('usersIndex')->with('error', '查无此人');
+                }
+            }
         }
     }
 }

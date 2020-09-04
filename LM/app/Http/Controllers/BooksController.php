@@ -167,6 +167,48 @@ class Bookscontroller extends Controller{
             return redirect('booksIndex')->with('error', '删除失败'. $id);
         }
     }
+    //id查询
+    public function selectID(Request $request)
+    {
+        //                                                    代码的减少？？
+        // 回传数据后在数据库查找有无对应的信息并获取
+        if ($request->isMethod('get')) {
+            $validator = \Validator::make(
+                $request->input(),
+                [
+                    //限制条件
+                    'Books.data' => 'required'
+                ]
+            );
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            //将页面存在Books[..]里的数据放到$books里
+            $books = $request->input('Books');
+            // dd($users);
+            //查名字
+            if (!empty($books['data'])) {
+                $num = $books['data'];
+                // dd($num);
+                // 从数据库获得对应数据
+                $bookss = Books::where('id', $num)
+                    ->get();
+                // dd($userss);
+
+                // 判断有无某项数据，否则查无此人
+                if (!empty($bookss['id'])) {
+                    // dd($bookss);
+                    // 分页
+                    $bookss = $bookss -> paginate(10);
+                    return view('books/index', [
+                        'bookss' => $bookss,
+                    ]);
+                } else {
+                    return redirect('booksIndex')->with('error', '查无此人');
+                }
+            }
+        }
+    }
 }
 
 
