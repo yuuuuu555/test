@@ -192,12 +192,21 @@ class UsersController extends Controller
 
     public function select(Request $request)
     {
-
-        if ($request->isMethod('POST')) {
-            $num = Users::where('$request')
-                ->get();
-
+        // $userss = Users::paginate(10);
+        // 回传数据后在数据库查找有无对应的信息并获取
+        if ($request->isMethod('GET')) {
+            $num = $request ->input('age');
             dd($num);
+            // $userss = Users::where(users[$request])
+            //     ->get();
+            //     if(!empty($userss)){
+            //         return view('users/index', [
+            //             'userss' => $userss,
+            //         ]);
+            //     }else{
+            //         echo 'fu';
+            //     }
+                
         }
     }
 }
