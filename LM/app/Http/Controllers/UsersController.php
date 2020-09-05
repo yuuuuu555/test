@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Users;
 use Illuminate\Http\Request;
 
@@ -205,6 +206,7 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
+            // dd($request);
             if (!empty($request)) {
                 //将页面存在Users[..]里的数据放到$users里
                 $users = $request->input('Users');
@@ -218,10 +220,10 @@ class UsersController extends Controller
                     // dd($userss);
 
                     // 判断有无某项数据，否则查无此人
-                    if (!empty($userss['id'])) {
+                    if (count($userss)) {
                         // dd($userss);
                         // 分页
-                        $userss = $userss -> paginate(10);
+                        $userss = Users::where('name', $num)->paginate(10);
                         return view('users/index', [
                             'userss' => $userss,
                         ]);
@@ -240,6 +242,7 @@ class UsersController extends Controller
         //                                                    代码的减少？？
         // 回传数据后在数据库查找有无对应的信息并获取
         if ($request->isMethod('get')) {
+            // dd($request);
             $validator = \Validator::make(
                 $request->input(),
                 [
@@ -257,22 +260,22 @@ class UsersController extends Controller
             if (!empty($users['data'])) {
                 $num = $users['data'];
                 // dd($num);
-                // 从数据库获得对应数据
-                $userss = Users::where('id', $num)
+                // 从数据库获得对应数据 返回的是一个object类型
+                $userss0 = Users::where('id', $num)
                     ->get();
-                // dd($userss);
-
-                // 判断有无某项数据，否则查无此人
-                if (!empty($userss['name'])) {
+                // 用count（）判断object类型是否为空 否则查无此人
+                if (count($userss0)) {
                     // dd($userss);
                     // 分页
-                    $userss = $userss -> paginate(10);
+                    $userss = Users::where('id', $num)->paginate(10);
                     return view('users/index', [
                         'userss' => $userss,
                     ]);
                 } else {
                     return redirect('usersIndex')->with('error', '查无此人');
                 }
+            } else {
+                return redirect('usersIndex')->with('error', '查无此人');
             }
         }
     }

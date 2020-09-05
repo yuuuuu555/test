@@ -37,7 +37,7 @@
                     <div class="form-group"><label for="status" class="col-sm-2 control-label">分类</label>
                         <div class="col-sm-5">
                             {{-- ??????????????????????????????????? --}}
-                            <select name="Books[sex]">
+                            <select name="Books[status]">
                             @foreach ($books->status() as $ind => $val)
                                 <label class="radio-inline">
                                     <option type="radio" name="Books[status]"

@@ -30,13 +30,30 @@
                 <div class="form-group"><label for="publisher" class="col-sm-2 control-label">书籍出版社</label>
                     <div class="col-sm-5"><input type="text" name="Books[publisher]"
                             value="{{ isset(old('Books')['name']) ? old('Books')['publisher'] : $books->publisher }}"
-                            class="form-control" id="publisher" placeholder="请输入书籍作者"></div>
+                            class="form-control" id="publisher" placeholder="请输入书籍出版社"></div>
                     <div class="col-sm-5">
                         <p class="form-control-static text-danger">{{ $errors->first('Books.publisher') }}</p>
                     </div>
                 </div>
 
-                <div class="form-group"><label for="status" class="col-sm-2 control-label">书籍分类</label>
+                <div class="form-group"><label for="classification" class="col-sm-2 control-label">书籍分类</label>
+                    <div class="col-sm-5">
+                        {{-- ???????????????????????????????????--}}
+                        <select name="Books[classification]">
+                            @foreach ($books->classification() as $ind => $val)
+                                <label class="radio-inline">
+                                    <option type="select" name="Books[classification]"
+                                        {{ $books->classification() == $ind ? 'checked' : '' }} value="{{ $ind }}">{{ $val }}
+                                </label>
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <p class="form-control-static text-danger">{{ $errors->first('Books.classification') }}</p>
+                    </div>
+                </div>
+                <div class="form-group"><label for="status" class="col-sm-2 control-label">书籍状态</label>
                     <div class="col-sm-5">
                         {{-- ???????????????????????????????????
                         --}}
@@ -44,25 +61,7 @@
                             @foreach ($books->status() as $ind => $val)
                                 <label class="radio-inline">
                                     <option type="select" name="Books[status]"
-                                        {{ $books->status() == $ind ? 'checked' : '' }} value="{{ $ind }}">{{ $val }}
-                                </label>
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="form-control-static text-danger">{{ $errors->first('Books.status') }}</p>
-                    </div>
-                </div>
-                <div class="form-group"><label for="classification" class="col-sm-2 control-label">书籍状态</label>
-                    <div class="col-sm-5">
-                        {{-- ???????????????????????????????????
-                        --}}
-                        <select name="Books[classification]">
-                            @foreach ($books->classification() as $ind => $val)
-                                <label class="radio-inline">
-                                    <option type="select" name="Books[classification]"
-                                        {{ $books->classification() == $ind ? 'checked' : '' }} value="{{ $ind }}">
+                                        {{ $books->status() == $ind ? 'checked' : '' }} value="{{ $ind }}">
                                         {{ $val }}
                                 </label>
                                 </option>
@@ -71,7 +70,7 @@
                         </select>
                     </div>
                     <div class="col-sm-5">
-                        <p class="form-control-static text-danger">{{ $errors->first('Books.classification') }}</p>
+                        <p class="form-control-static text-danger">{{ $errors->first('Books.status') }}</p>
                     </div>
                 </div>
                 <div class="form-group">

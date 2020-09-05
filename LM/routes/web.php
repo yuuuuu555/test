@@ -34,4 +34,8 @@ Route::group(['middlewqre' => 'web'], function () {
     Route::any('booksDetail/{id}','BooksController@detail');
     Route::any('booksDelete/{id}','BooksController@delete');
     Route::any('booksSelectID','BooksController@selectID');
+    Route::any('booksSelectName','BooksController@selectName');
+    Route::any('booksSelectRetrieval','BooksController@selectRetrieval');
+    Route::any('booksSelectStatus','BooksController@selectStatus');
+    
 });

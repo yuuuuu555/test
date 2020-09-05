@@ -5,8 +5,8 @@
             value=""
             class="form-control" id="data" placeholder="请输入">
         </div>
-            <button type="submit" onclick="javascript:this.form.action='usersSelectName'">ID搜索</button>
-            <button type="submit" onclick="javascript:this.form.action='usersSelectID'">名字搜索</button>
+            <button type="submit" onclick="javascript:this.form.action='usersSelectID'">ID搜索</button>
+            <button type="submit" onclick="javascript:this.form.action='usersSelectName'">名字搜索</button>
         <p class="form-control-static text-danger"></p>
 </div>
 </form>
