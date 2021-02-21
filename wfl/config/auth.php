@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+// 管理员
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ]
     ],
 
     /*
@@ -71,11 +76,12 @@ return [
             'model' => App\User::class,
             // 'table' => 'users',
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+// 管理员admins
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ]
+    
     ],
 
     /*
@@ -92,12 +98,12 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
-
+// 重置密码有效时间
     'passwords' => [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 10,
         ],
     ],
 

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Route;
 
 class Handler extends ExceptionHandler
 {
@@ -48,4 +49,12 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    // 设置/admin后能跳转到/admin/login页面
+    // protected function unauthenticated($request, AuthenticationException $exception)
+    // {
+    //     return starts_with(Route::currentRouteName(), 'admin')
+    //     ? redirect(route('admin.Login.show'))
+    //     : parent::unauthenticated($request, $exception);
+    // }
 }
