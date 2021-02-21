@@ -40,7 +40,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::any('booksSelectStatus', 'Auth\UserBooksController@selectStatus');
 
     // appointment
-    Route::any('booksAppointment', 'Auth\AppointmentController@appointment');
+    Route::any('booksAppointment/{idB}/{idU}', 'Auth\AppointmentController@appointment');
     // user
     Route::any('userdetail/{id}', 'Auth\UUsersController@detail');
 

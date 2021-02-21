@@ -37,8 +37,7 @@
                         <td>{{ date('Y-m-d', $books->created_at) }}</td>
                         <td><a href="{{ url('user/booksDetail', ['id' => $books->id]) }}">详情</a>
 
-                            <a href="{{ url('booksAppointment', ['idB' => $books->id],
-                            ['idU' => auth::user()->id]) }}"
+                            <a href="{{ url('user/booksAppointment', ['idB' => $books->id, 'idU' => auth::user()->id])}}"
                                 onclick="if(confirm('确定预约此书么？') == false) return false;">预约</a>
                         </td>
                     </tr>
