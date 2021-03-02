@@ -18,8 +18,9 @@
                     <th>书籍名称</th>
                     <th>书籍作者</th>
                     <th>书籍出版社</th>
-                    <th>书籍分类</th>
                     <th>书本状态</th>
+                    <th>书籍分类</th>
+                    <th>书本余量</th>
                     <th>存入图书馆时间</th>
                     <th width="120">操作</th>
                 </tr>
@@ -34,6 +35,7 @@
                         <td>{{ $books->publisher }}</td>
                         <td>{{ $books->status($books->status) }}</td>
                         <td>{{ $books->classification($books->classification) }}</td>
+                        <td>{{ $books->save }}</td>
                         <td>{{ date('Y-m-d', $books->created_at) }}</td>
                         <td><a href="{{ url('user/booksDetail', ['id' => $books->id]) }}">详情</a>
 

@@ -22,6 +22,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('UserName');
             $table->string('BookName');
             $table->string('status');
+            $table->string('author');
             $table->timestamps();
         });
     }

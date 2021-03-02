@@ -11,22 +11,22 @@
 <form class="form-horizontal" method="GET" action="">
     <div class="form-group" align = "center">书籍状态与书籍分类
         {{-- <label for="Booksss[classification]" class="col-sm-2 control-label" >书籍状态与书籍分类</label> --}}
-        <select name="Books[classification]">
+        <select name="Books[status]">
             <option>显示所有</option>
             <option>显示有存量的</option>
         </select>
-        <select name="Books[status]">
+        <select name="Books[classification]">
             {{-- {{}} --}}
-            <option type="select" name="Books[status]">所有分类</option>
-            @foreach ($booksss->status() as $ind => $val)
-                <option type="select" name="Books[status]"
-                    {{ $booksss->status() == $ind ? 'checked' : '' }} value="{{ $ind }}">
+            <option type="select" name="Books[classification]">所有分类</option>
+            @foreach ($booksss->classification() as $ind => $val)
+                <option type="select" name="Books[classification]"
+                    {{ $booksss->classification() == $ind ? 'checked' : '' }} value="{{ $ind }}">
                     {{ $val }}
                 </option>
             @endforeach
         </select>
         <button ype="submit" onclick="javascript:this.form.action='booksSelectRetrieval'">检索</button>
     </div>
-    
+
 </form>
 

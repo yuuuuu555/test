@@ -55,6 +55,7 @@ class AdminBooksController extends Controller
                     'Books.classification' => 'required|integer',
                     'Books.author' => 'required|min:2|max:20',
                     'Books.publisher' => 'required|min:2|max:20',
+                    'Books.save' => 'required|integer',
                 ],
                 [
                     //翻译
@@ -66,10 +67,11 @@ class AdminBooksController extends Controller
                 [
                     //翻译
                     'Books.name' => '书籍名称',
-                    'Books.status' => '书籍分类',
-                    'Books.classification' => '书籍状态',
+                    'Books.status' => '书籍状态',
+                    'Books.classification' => '书籍分类',
                     'Books.author' => '书籍作者',
                     'Books.publisher' => '出版社',
+                    'Books.save' => '书籍存量',
                 ]
             );
             if ($validator->fails()) {
@@ -97,7 +99,7 @@ class AdminBooksController extends Controller
     public function save(Request $request)
     {
         // 存到$date中
-        $date = $request->input('Users');
+        $date = $request->input('Books');
         //获取一个模型
         $books = new Books();
         // 给模型赋值
@@ -108,6 +110,7 @@ class AdminBooksController extends Controller
         $books->position = $date['position'];
         $books->classfication = $date['classfication'];
         $books->status = $date['status'];
+        $books->save = $date['save'];
 
         // var_dump($date);
 
@@ -136,6 +139,7 @@ class AdminBooksController extends Controller
                     'Books.classification' => 'required|integer',
                     'Books.author' => 'required|min:2|max:20',
                     'Books.publisher' => 'required|min:2|max:20',
+                    'Books.save' => 'required|integer|max:50',
                 ],
                 [
                     //翻译
@@ -147,10 +151,11 @@ class AdminBooksController extends Controller
                 [
                     //翻译
                     'Books.name' => '书籍名称',
-                    'Books.status' => '书籍分类',
-                    'Books.classification' => '书籍状态',
+                    'Books.status' => '书籍状态',
+                    'Books.classification' => '书籍分类',
                     'Books.author' => '书籍作者',
                     'Books.publisher' => '出版社',
+                    'Books.save' => '存量',
                 ]
             );
 
@@ -160,7 +165,7 @@ class AdminBooksController extends Controller
             $books->name = $date['name'];
             $books->author = $date['author'];
             $books->publisher = $date['publisher'];
-            // $books->position = $date['position'];
+            $books->save = $date['save'];
             $books->status = $date['status'];
             $books->classification = $date['classification'];
 
@@ -298,10 +303,11 @@ class AdminBooksController extends Controller
             //将页面存在Books[..]里的数据放到$books里
             $books = $request->input('Books');
             // dd($books);
+
             //查名字
-            if (!empty($books['classification'])) {
-                $data1 = $books['classification'];
-                $data2 = $books['status'];
+            if (!empty($books['status'])) {
+                $data1 = $books['status'];
+                $data2 = $books['classification'];
                 // dd($data2);
                 if ($data1 == "显示所有") {
                     if ($data2 == "所有分类") {
@@ -309,10 +315,10 @@ class AdminBooksController extends Controller
                     } else {
                         // $num = gettype($bookss);
                         // dd($data2);//"1"
-                        $bookss = Books::where('status', $data2)->first();
+                        $bookss = Books::where('classification', $data2)->first();
                         // dd($bookss);
                         if (!empty($bookss)) {
-                            $bookss = Books::where('status', $data2)->paginate(10);
+                            $bookss = Books::where('classification', $data2)->paginate(10);
                             // dd($bookss);
                             return view('books/index', [
                                 'bookss' => $bookss,
@@ -328,17 +334,17 @@ class AdminBooksController extends Controller
                     if (!empty($bookss)) {
                         $data1 = 10;
                         if ($data2 == "所有分类") {
-                            $bookss = Books::where('classification', $data1)->paginate(10);
+                            $bookss = Books::where('status', $data1)->paginate(10);
                             return view('books/index', [
                                 'bookss' => $bookss,
                                 'booksss' => $booksss
                             ]);
                         } else {
                             // dd($data2,$data1);
-                            $bookss = Books::where('classification', $data1)->where('status', $data2)->first();
+                            $bookss = Books::where('status', $data1)->where('classification', $data2)->first();
                             // dd($bookss);
                             if (!empty($bookss)) {
-                                $bookss = Books::where('classification', $data1)->where('status', $data2)->paginate(10);
+                                $bookss = Books::where('status', $data1)->where('classification', $data2)->paginate(10);
                                 // dd($bookss);
                                 return view('books/index', [
                                     'bookss' => $bookss,
@@ -354,18 +360,5 @@ class AdminBooksController extends Controller
                 }
             }
         }
-    }
-    // 预约
-    public function booksAppointment($idU, $idB)
-    {
-        $books = Books::find($idB);
-        $users = Users::find($idU);
-        dd($books);
-
-        // $userData =
-        // if(){
-
-
-        // }
     }
 }

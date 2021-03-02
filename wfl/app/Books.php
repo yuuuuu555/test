@@ -6,84 +6,84 @@ use Illuminate\Database\Eloquent\Model;
 
 class Books extends Model
 {
-    const STATUS_A = 1;
-    const STATUS_B = 2;
-    const STATUS_C = 3;
-    const STATUS_D = 4;
-    const STATUS_E = 5;
-    const STATUS_F = 6;
-    const STATUS_G = 7;
-    const STATUS_H = 8;
-    const STATUS_I = 9;
-    const STATUS_J = 10;
-    const STATUS_K = 11;
-    const STATUS_L = 12;
-    const STATUS_M = 13;
-    const STATUS_N = 14;
-    const STATUS_O = 15;
-    const STATUS_P = 16;
-    const STATUS_Q = 17;
-    const STATUS_R = 18;
-    const STATUS_S = 19;
-    const STATUS_T = 20;
-    const STATUS_U = 21;
-    const STATUS_V = 22;
-    const STATUS_W = 23;
-    const STATUS_X = 24;
-    const STATUS_Y = 25;
-    const STATUS_Z = 26;
+    const CLASSIFICATION_A = 1;
+    const CLASSIFICATION_B = 2;
+    const CLASSIFICATION_C = 3;
+    const CLASSIFICATION_D = 4;
+    const CLASSIFICATION_E = 5;
+    const CLASSIFICATION_F = 6;
+    const CLASSIFICATION_G = 7;
+    const CLASSIFICATION_H = 8;
+    const CLASSIFICATION_I = 9;
+    const CLASSIFICATION_J = 10;
+    const CLASSIFICATION_K = 11;
+    const CLASSIFICATION_L = 12;
+    const CLASSIFICATION_M = 13;
+    const CLASSIFICATION_N = 14;
+    const CLASSIFICATION_O = 15;
+    const CLASSIFICATION_P = 16;
+    const CLASSIFICATION_Q = 17;
+    const CLASSIFICATION_R = 18;
+    const CLASSIFICATION_S = 19;
+    const CLASSIFICATION_T = 20;
+    const CLASSIFICATION_U = 21;
+    const CLASSIFICATION_V = 22;
+    const CLASSIFICATION_W = 23;
+    const CLASSIFICATION_X = 24;
+    const CLASSIFICATION_Y = 25;
+    const CLASSIFICATION_Z = 26;
 
     // 用一个key $ind来装
-    public function status($ind = null )
+    public function classification($ind = null )
     {
         $arr = [
-            self::STATUS_A => 'A',
-            self::STATUS_B => 'B',
-            self::STATUS_C => 'C',
-            self::STATUS_D => 'D',
-            self::STATUS_E => 'E',
-            self::STATUS_F => 'F',
-            self::STATUS_G => 'G',
-            self::STATUS_H => 'H',
-            self::STATUS_I => 'I',
-            self::STATUS_J => 'J',
-            self::STATUS_K => 'K',
-            self::STATUS_L => 'L',
-            self::STATUS_M => 'M',
-            self::STATUS_N => 'N',
-            self::STATUS_O => 'O',
-            self::STATUS_P => 'P',
-            self::STATUS_Q => 'Q',
-            self::STATUS_R => 'R',
-            self::STATUS_S => 'S',
-            self::STATUS_T => 'T',
-            self::STATUS_U => 'U',
-            self::STATUS_V => 'V',
-            self::STATUS_W => 'W',
-            self::STATUS_X => 'X',
-            self::STATUS_Y => 'Y',
-            self::STATUS_Z => 'Z',
+            self::CLASSIFICATION_A => 'A',
+            self::CLASSIFICATION_B => 'B',
+            self::CLASSIFICATION_C => 'C',
+            self::CLASSIFICATION_D => 'D',
+            self::CLASSIFICATION_E => 'E',
+            self::CLASSIFICATION_F => 'F',
+            self::CLASSIFICATION_G => 'G',
+            self::CLASSIFICATION_H => 'H',
+            self::CLASSIFICATION_I => 'I',
+            self::CLASSIFICATION_J => 'J',
+            self::CLASSIFICATION_K => 'K',
+            self::CLASSIFICATION_L => 'L',
+            self::CLASSIFICATION_M => 'M',
+            self::CLASSIFICATION_N => 'N',
+            self::CLASSIFICATION_O => 'O',
+            self::CLASSIFICATION_P => 'P',
+            self::CLASSIFICATION_Q => 'Q',
+            self::CLASSIFICATION_R => 'R',
+            self::CLASSIFICATION_S => 'S',
+            self::CLASSIFICATION_T => 'T',
+            self::CLASSIFICATION_U => 'U',
+            self::CLASSIFICATION_V => 'V',
+            self::CLASSIFICATION_W => 'W',
+            self::CLASSIFICATION_X => 'X',
+            self::CLASSIFICATION_Y => 'Y',
+            self::CLASSIFICATION_Z => 'Z',
 
         ];
         //判断有无传值
         if ($ind !== null) {
             //判断key$ind是否存在于$arr 不存在返回SEX_UN
-            return array_key_exists($ind, $arr) ? $arr[$ind] : $arr[slef::STATUS_A];
+            return array_key_exists($ind, $arr) ? $arr[$ind] : $arr[self::CLASSIFICATION_A];
         }
         return $arr;
     }
 
-    const CLASSIFICATION_YES = 10;
-    const CLASSIFICATION_NO = 20;
-    public function classification($ind = null){
+    const STATUS_YES = 10;
+    const STATUS_NO = 20;
+    public function status($ind = null){
         $arr = [
-            self::CLASSIFICATION_YES => '有',
-            self::CLASSIFICATION_NO => '无',
+            self::STATUS_YES => '有',
+            self::STATUS_NO => '无',
         ];
 
         if ($ind !== null) {
             //判断key$ind是否存在于$arr 不存在返回SEX_UN
-            return array_key_exists($ind, $arr) ? $arr[$ind] : $arr[slef::CLASSIFICATION_YES];
+            return array_key_exists($ind, $arr) ? $arr[$ind] : $arr[self::STATUS_YES];
         }
         return $arr;
     }
@@ -91,7 +91,7 @@ class Books extends Model
 
     public $table = 'books';
 
-    protected $fillable = ['name', 'author', 'publisher','position','status','classification'];
+    protected $fillable = ['name', 'author', 'publisher','position','status','classification', 'save'];
 
     public $timestamps = true;
 

@@ -85,7 +85,7 @@
                                 {{-- 登出事件 --}}
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -116,13 +116,22 @@
                         <div class="list-group">
                             <a href="{{ url('admin/usersIndex') }}"
                                 class="list-group-item
-                                                            {{ Request::getPathInfo() == 'admin/usersIndex' ? 'active' : '' }}">用户列表</a>
+                                            {{ Request::getPathInfo() == 'admin/usersIndex' ? 'active' : '' }}">用户列表</a>
                             <a href="{{ url('admin/books') }}"
                                 class="list-group-item
-                                                            {{ Request::getPathInfo() == 'admin/books' ? 'active' : '' }}">图书列表</a>
+                                            {{ Request::getPathInfo() == 'admin/books' ? 'active' : '' }}">图书列表</a>
                             <a href="{{ url('admin/booksCreate') }}"
                                 class="list-group-item
-                                                            {{ Request::getPathInfo() == 'admin/booksCreate' ? 'active' : '' }}">新增图书</a>
+                                            {{ Request::getPathInfo() == 'admin/booksCreate' ? 'active' : '' }}">新增图书</a>
+                            <a href="{{ url('admin/Appointing') }}"
+                                class="list-group-item
+                                            {{ Request::getPathInfo() == 'admin/Appointing' ? 'active' : '' }}">正在预约的书籍</a>
+                                            <a href="{{ url('admin/reading') }}"
+                                class="list-group-item
+                                            {{ Request::getPathInfo() == 'admin/reading' ? 'active' : '' }}">正在借阅的书籍</a>
+                            <a href="{{ url('admin/history') }}"
+                                class="list-group-item
+                                            {{ Request::getPathInfo() == 'admin/history' ? 'active' : '' }}">预约总记录</a>
                         </div>
 
 
@@ -132,13 +141,16 @@
 
                             <a href="{{ url('user/books') }}"
                                 class="list-group-item
-                                                        {{ Request::getPathInfo() == 'user/books' ? 'active' : '' }}">图书列表</a>
+                                                                    {{ Request::getPathInfo() == 'user/books' ? 'active' : '' }}">图书列表</a>
                             <a href="{{ url('user/userdetail', ['id' => Auth::user()->id]) }}"
                                 class="list-group-item
-                                                        {{ Request::getPathInfo() == 'user/userdetail' ? 'active' : '' }}">个人信息</a>
-                            <a href="{{ url('user/userdetail', ['id' => Auth::user()->id]) }}"
+                                                                    {{ Request::getPathInfo() == 'user/userdetail' ? 'active' : '' }}">个人信息</a>
+                            <a href="{{ url('user/booksAppointing') }}"
                                 class="list-group-item
-                                                        {{ Request::getPathInfo() == 'user/userdetail' ? 'active' : '' }}">个人信息</a>
+                                                                    {{ Request::getPathInfo() == 'user/booksAppointing' ? 'active' : '' }}">正在预约的书籍</a>
+                            <a href="{{ url('user/booksHistory') }}"
+                                class="list-group-item
+                                                                    {{ Request::getPathInfo() == 'user/booksHistory' ? 'active' : '' }}">历史预约记录</a>
                         </div>
 
                     @else

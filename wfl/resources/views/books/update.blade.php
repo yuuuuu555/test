@@ -17,10 +17,10 @@
                         <p class="form-control-static text-danger">{{ $errors->first('Books.name') }}</p>
                     </div>
                 </div>
-                <div class="form-group"><label for="author" class="col-sm-2 control-label">书记作者</label>
+                <div class="form-group"><label for="author" class="col-sm-2 control-label">书籍作者</label>
                     <div class="col-sm-5"><input type="text" name="Books[author]"
                             value="{{ isset(old('Books')['name']) ? old('Books')['author'] : $books->author }}"
-                            class="form-control" id="author" placeholder="请输入学生年龄"></div>
+                            class="form-control" id="author" placeholder="请输入书籍作者"></div>
                     <div class="col-sm-5">
                         <p class="form-control-static text-danger">{{ $errors->first('Books.author') }}</p>
                     </div>
@@ -28,12 +28,20 @@
                 <div class="form-group"><label for="publisher" class="col-sm-2 control-label">出版社</label>
                     <div class="col-sm-5"><input type="text" name="Books[publisher]"
                             value="{{ isset(old('Books')['name']) ? old('Books')['publisher'] : $books->publisher }}"
-                            class="form-control" id="publisher" placeholder="请输入学生年龄"></div>
+                            class="form-control" id="publisher" placeholder="请输入出版社"></div>
                     <div class="col-sm-5">
                         <p class="form-control-static text-danger">{{ $errors->first('Books.publisher') }}</p>
                     </div>
                 </div>
-                <div class="form-group"><label for="status" class="col-sm-2 control-label">分类</label>
+                <div class="form-group"><label for="save" class="col-sm-2 control-label">存量</label>
+                    <div class="col-sm-5"><input type="text" name="Books[save]"
+                            value="{{ isset(old('Books')['name']) ? old('Books')['save'] : $books->save }}"
+                            class="form-control" id="save" placeholder="请输入书籍存量"></div>
+                    <div class="col-sm-5">
+                        <p class="form-control-static text-danger">{{ $errors->first('Books.save') }}</p>
+                    </div>
+                </div>
+                <div class="form-group"><label for="status" class="col-sm-2 control-label">书籍状态</label>
                     <div class="col-sm-5">
                         {{-- ??????????????????????????????????? --}}
                         <select name="Books[status]">
@@ -51,7 +59,7 @@
                         <p class="form-control-static text-danger">{{ $errors->first('Books.status') }}</p>
                     </div>
                 </div>
-                <div class="form-group"><label for="classification" class="col-sm-2 control-label">状态</label>
+                <div class="form-group"><label for="classification" class="col-sm-2 control-label">书籍分类</label>
                     <div class="col-sm-5">
                         {{-- ??????????????????????????????????? --}}
                         <select name="Books[classification]">

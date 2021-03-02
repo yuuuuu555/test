@@ -35,7 +35,14 @@
                         <p class="form-control-static text-danger">{{ $errors->first('Books.publisher') }}</p>
                     </div>
                 </div>
-
+                <div class="form-group"><label for="save" class="col-sm-2 control-label">存量</label>
+                    <div class="col-sm-5"><input type="text" name="Books[save]"
+                            value="{{ isset(old('Books')['name']) ? old('Books')['save'] : $books->save }}"
+                            class="form-control" id="save" placeholder="请输入书籍存量"></div>
+                    <div class="col-sm-5">
+                        <p class="form-control-static text-danger">{{ $errors->first('Books.save') }}</p>
+                    </div>
+                </div>
                 <div class="form-group"><label for="classification" class="col-sm-2 control-label">书籍分类</label>
                     <div class="col-sm-5">
                         {{-- ???????????????????????????????????--}}

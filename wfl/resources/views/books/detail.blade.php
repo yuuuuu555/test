@@ -22,12 +22,16 @@
                         <td>{{$books->publisher}}</td>
                     </tr>
                     <tr>
-                        <td>分类</td>
+                        <td>书籍状态</td>
                         <td>{{$books->status($books->status)}}</td>
                     </tr>
                     <tr>
-                        <td>状态</td>
+                        <td>书籍分类</td>
                         <td>{{$books->classification($books->classification)}}</td>
+                    </tr>
+                    <tr>
+                        <td>书籍存量</td>
+                        <td>{{$books->save}}</td>
                     </tr>
                     <tr>
                         <td>添加日期</td>
