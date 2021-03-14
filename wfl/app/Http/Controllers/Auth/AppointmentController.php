@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Appointment;
 use App\Books;
+use App\Jobs\DelayOne;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,7 +69,7 @@ class AppointmentController extends Controller
                             }
                             $ok = appointment::create([
                                 'account' => $account, 'BookId' => $idB, 'UserId' => $idU,
-                                'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author,
+                                'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author, 'email' => $email,
                             ]);
                             return redirect('user/books')->with('success', '余量充足，预约成功，请在一天之内到图书馆借阅书籍，并在15天之内归还');
                         }
@@ -87,7 +88,7 @@ class AppointmentController extends Controller
                         }
                         $ok = appointment::create([
                             'account' => $account, 'BookId' => $idB, 'UserId' => $idU,
-                            'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author,
+                            'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author,'email' => $email,
                         ]);
                         return redirect('user/books')->with('success', '没预约过这本书，余量充足，预约成功，请在一天之内到图书馆借阅书籍，并在15天之内归还');
                     }
@@ -107,7 +108,7 @@ class AppointmentController extends Controller
                 }
                 $ok = appointment::create([
                     'account' => $account, 'BookId' => $idB, 'UserId' => $idU,
-                    'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author,
+                    'UserEmail' => $email, 'UserName' => $nameU, 'BookName' => $nameB, 'author' => $author,'email' => $email,
                 ]);
                 return redirect('user/books')->with('success', '没有预约过任何书，余量充足，预约成功，请在一天之内到图书馆借阅书籍，并在15天之内归还');
             }
@@ -196,9 +197,10 @@ class AppointmentController extends Controller
             return redirect('user/booksAppointing')->with('error', '取消预约失败，您已正在借阅此书，请尽快归还');
         }else{
             $new = Appointment::where('id', $id)->update(['status' => '6']);
-            $next = Appointment::where('BookId', $new->BookId)->where('status','1')->first()->update(['status' => '2']);
+            $data = Appointment::where('BookId', $new->BookId)->where('status','1')->first()->update(['status' => '2']);
 
-            // 延时任务
+            // 延时任务1
+            DelayOne::dispatch($data)->delay(Carbon::now()->addMinutes(2));
         // 跳转到预约那里
         return redirect('user/booksAppointing')->with('success', '取消预约成功');
         }

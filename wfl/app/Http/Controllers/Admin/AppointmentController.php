@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
+use App\jobs\DelayOne;
+use App\jobs\DelayTwo;
+use Illuminate\Support\Facades\Mail;
+
 
 class AppointmentController extends Controller
 {
@@ -62,16 +66,22 @@ class AppointmentController extends Controller
                 ]);
                 return redirect('admin/Appointing')->with('success', '取消预约成功');
             } else {
-                $idY = Appointment::where('BookId', $new->BookId)->where('status', '1')->first()->update(['status', '2']);
-                // 发通知
+                // 如果又人预约
+                $data = Appointment::where('BookId', $new->BookId)->where('status', '1')->first()->update(['status', '2']);
 
+                // 发通知
+                Mail::send('emails.borrow', [
+                    'data' => $data
+                ], function ($message) use ($data) {
+                    $message->to($data->email)->subject('回复');
+                });
                 // 延时任务
                 return redirect('admin/Appointing')->with('success', '取消预约成功');
             }
         } else {
             // 如果只在排队中取消
             Appointment::where('id', $id)->update(['status' => '6']);
-            return redirect('admin/booksAppointing')->with('success', '取消预约成功');
+            return redirect('admin/Appointing')->with('success', '取消预约成功');
         }
     }
     //查用户名字
@@ -470,7 +480,7 @@ class AppointmentController extends Controller
     // 还书
     public function give_back($id)
     {
-        $now = Appointment::where('id', $id);
+        $now = Appointment::find($id);
         if ($now->status == '0') {
             // 逾期
             $time_now = Carbon::now();
@@ -485,27 +495,35 @@ class AppointmentController extends Controller
             ]);
         } elseif ($now->status == '3') {
             //状态为借阅中
-            Appointment::where('status', $id)->update(['status' => '5']);
+            $backed = Appointment::where('id', $id)->update(['status' => '5']);
+            // dd($backed);
             // 还书后，提醒下一个预约此书的人来借书
             $next = Appointment::where('BookId', $now->BookId)->where('status', '1')->first();
+            // dd($next->id);
             if (empty($next->id)) {
                 // 无人排队中
                 // 查找书籍的存量
                 $save = Books::where('id', $now->BookId)->value('save');
                 $saves = $save + 1;
+                // dd($saves);
                 Books::where('id', $now->BookId)->update([
                     'status' => '10',
                     'save' => $saves,
                 ]);
-                return redirect('history')->with('success', $id . '还书成功1');
+                return redirect('admin/history')->with('success', $id . '还书成功1');
             } else {
                 // 有人排队
-                $ok = Appointment::where('id', $next->id)->update(['status' => '2']);
+                $data = Appointment::where('id', $next->id)->update(['status' => '2']);
                 // 提醒人来拿书
 
+                Mail::send('emails.borrow', [
+                    'data' => $data
+                ], function ($message) use ($data) {
+                    $message->to($data->email)->subject('回复');
+                });
                 // 延时任务1
-
-                return redirect('history')->with('success', $id . '还书成功2');
+                DelayOne::dispatch($data)->delay(Carbon::now()->addMinutes(2));
+                return redirect('admin/history')->with('success', $id . '还书成功2');
             }
         } else {
             return redirect()->back()->with('此书不在借阅中，禁止操作');
@@ -525,11 +543,15 @@ class AppointmentController extends Controller
             return redirect('reading')->with('success', '还款成功1');
         } else {
             // 此书有人在借
-            $ok = Appointment::where('id', $man->id)->update(['status' => '2']);
+            $data = Appointment::where('id', $man->id)->update(['status' => '2']);
             // 提醒人来拿书
-
+            Mail::send('emails.borrow', [
+                'data' => $data
+            ], function ($message) use ($data) {
+                $message->to($data->email)->subject('回复');
+            });
             // 延时任务1
-
+            DelayOne::dispatch($data)->delay(Carbon::now()->addMinutes(2));
             return redirect('reading')->with('success', '还款成功');
         }
     }
@@ -540,9 +562,9 @@ class AppointmentController extends Controller
         $person = Appointment::where('id', $id)->value('status');
         if (!empty($person == '2')) {
             // 状态在提醒中
-            $ok = Appointment::where('id', $id)->update(['status' => '3']);
+            $data = Appointment::where('id', $id)->update(['status' => '3']);
             // 延时任务2
-
+            DelayTwo::dispatch($data)->delay(Carbon::now()->addMinutes(2));
             return redirect('admin/reading')->with('success', '借出成功' . $id);
         } else {
             return redirect('admin/Appointing')->with('error', '未符合借出条件，借出失败' . $id);
