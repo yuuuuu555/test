@@ -20,10 +20,10 @@ class DelayTwo implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Data $data)
+    public function __construct()
     {
         //
-        $this->data = $data;
+        $this->delay(20);
     }
 
     /**
@@ -31,7 +31,7 @@ class DelayTwo implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Data $data)
+    public function handle(Order $data)
     {
         //
         $status = Appointment::where('status', $data->id)->value('status');

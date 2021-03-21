@@ -1,5 +1,6 @@
 @extends('common/layouts')
 @section('content')
+@include('common/message')
     <?php
                 // session_start();
                 // $user = $_SESSION['user'];

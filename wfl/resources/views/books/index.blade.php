@@ -1,8 +1,10 @@
 @extends('common/layouts')
 @section('content')
-    @include('common/message')
     <div>
-    @include('common/selectB')
+        @include('common/message')
+    </div>
+    <div>
+        @include('common/selectB')
     </div>
     <div class="card-body">
         @if (session('status'))

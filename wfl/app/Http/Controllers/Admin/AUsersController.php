@@ -159,9 +159,9 @@ class AUsersController extends Controller
     {
         $users = User::find($id);
         if ($users->delete()) {
-            return redirect('usersIndex')->with('success', '删除成功' . $id);
+            return redirect('admin/usersIndex')->with('success', '删除成功' . $id);
         } else {
-            return redirect('usersIndex')->with('error', '删除失败' . $id);
+            return redirect('admin/usersIndex')->with('error', '删除失败' . $id);
         }
     }
     //查名字

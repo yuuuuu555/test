@@ -48,7 +48,8 @@ class AppointmentController extends Controller
         } elseif ($status == '2') {
             // 如果是在提醒时取消
 
-            $new = Appointment::where('id', $id)->update(['status' => '6']);
+            Appointment::where('id', $id)->update(['status' => '6']);
+            $new = Appointment::where('id', $id);
             $next = Appointment::where('BookId', $new->BookId)->where('status', '1')->first();
 
             // 如果没有人预约
@@ -564,7 +565,7 @@ class AppointmentController extends Controller
             // 状态在提醒中
             $data = Appointment::where('id', $id)->update(['status' => '3']);
             // 延时任务2
-            DelayTwo::dispatch($data)->delay(Carbon::now()->addMinutes(2));
+            DelayTwo::dispatch($data)->delay(20);
             return redirect('admin/reading')->with('success', '借出成功' . $id);
         } else {
             return redirect('admin/Appointing')->with('error', '未符合借出条件，借出失败' . $id);

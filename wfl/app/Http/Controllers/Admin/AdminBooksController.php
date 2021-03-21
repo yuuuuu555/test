@@ -311,7 +311,7 @@ class AdminBooksController extends Controller
                 // dd($data2);
                 if ($data1 == "显示所有") {
                     if ($data2 == "所有分类") {
-                        return redirect('booksIndexU');
+                        return redirect('admin/books');
                     } else {
                         // $num = gettype($bookss);
                         // dd($data2);//"1"

@@ -1,91 +1,73 @@
 @extends('common.layouts')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<link rel="stylesheet" type="text/css" href="./style.css">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<script type="text/javascript" src="./jquery.min.js"></script>
+<script type="text/javascript" src="./vector.js"></script>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+<script src="{{ URL::asset('./static/layouts/js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('./static/layouts/js/vector.js') }}"></script>
+<link rel="stylesheet" href="{{ URL::asset('./static/layouts/css/style.css') }}">
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+<div id="container">
+	<div id="output">
+		<div class="containerT">
+			<h1>用户注册</h1>
+			<form class="form" id="entry_form" method="POST" action="{{ route('register') }}">
+				@csrf
+				<div>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+					<input type="text" placeholder="姓名" id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+					@error('name')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+				@enderror
+				</div>
+				<div>
 
-                        <div class="form-group row">
-                            <label for="account" class="col-md-4 col-form-label text-md-right">{{ __('Account Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="account" type="account" class="form-control @error('account') is-invalid @enderror" name="account" value="{{ old('account') }}" required autocomplete="account">
-
-                                @error('account')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+					<input type="text" placeholder="账号" id="account" type="account" class="form-control @error('account') is-invalid @enderror" name="account" value="{{ old('account') }}" required autocomplete="account" autofocus>
+					@error('account')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+				@enderror
                 </div>
-            </div>
-        </div>
-    </div>
+                <div>
+
+					<input type="text" placeholder="邮箱" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+					@error('email')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+				@enderror
+                </div>
+                <div>
+					<input type="password" placeholder="密码" id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                </div>
+                <div>
+
+					<input type="password" placeholder="再次输入密码" id="password-confirm" type="password" class="form-control  @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+				</div>
+				<button type="submit" id="entry_btn">注册</button>
+				<div id="prompt" class="prompt"></div>
+			</form>
+		</div>
+	</div>
 </div>
-@endsection
+
+<script type="text/javascript">
+    $(function(){
+        Victor("container", "output");   //登陆背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                $("#entry_btn").click();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

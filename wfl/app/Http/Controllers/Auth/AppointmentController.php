@@ -39,7 +39,7 @@ class AppointmentController extends Controller
             // 检查是否在预约记录中找到这个人预约记录
             if (!empty($Bid)) {
                 // 查找该用户的预约记录中正在预约的书本记录
-                $num = Appointment::where('UserId', $idU)->where('status', '!=', '5')->count();
+                $num = Appointment::where('UserId', $idU)->where('status', '<', '4')->count();
                 // dd($num);
                 // 查看预约中的数量是否已达上限
                 if ($num > 2) {
@@ -50,7 +50,8 @@ class AppointmentController extends Controller
                     $B = Appointment::where('UserId', $idU)->where('BookId', $idB)->first();
                     if (!empty($B)) {
                         // 查看预约过这本书的记录是否都是已归还状态
-                        $numOK = Appointment::where('UserId', $idU)->where('BookId', $idB)->where('status', '!=', '5')->count();
+                        $numOK = Appointment::where('UserId', $idU)->where('BookId', $idB)->where('status', '<', '5')->count();
+                        // dd($numOK);
                         if (!empty($numOK)) {
                             // 正在预约中，预约失败
                             return redirect('user/books')->with('error', '您正在预约此书中，预约失败');
@@ -65,6 +66,10 @@ class AppointmentController extends Controller
                                 books::where('id', $idB)->update([
                                     'save' => $Save,
                                     'status' => $status,
+                                ]);
+                            }else{
+                                books::where('id', $idB)->update([
+                                    'save' => $Save,
                                 ]);
                             }
                             $ok = appointment::create([
@@ -84,6 +89,10 @@ class AppointmentController extends Controller
                             books::where('id', $idB)->update([
                                 'save' => $Save,
                                 'status' => $status,
+                            ]);
+                        }else{
+                            books::where('id', $idB)->update([
+                                'save' => $Save,
                             ]);
                         }
                         $ok = appointment::create([
@@ -105,6 +114,10 @@ class AppointmentController extends Controller
                         'save' => $Save,
                         'status' => $status,
                     ]);
+                }else{
+                    books::where('id', $idB)->update([
+                        'save' => $Save,
+                    ]);
                 }
                 $ok = appointment::create([
                     'account' => $account, 'BookId' => $idB, 'UserId' => $idU,
@@ -118,7 +131,7 @@ class AppointmentController extends Controller
             // 检查是否在预约记录中找到这个人预约记录
             if (!empty($Bid)) {
                 // 查找该用户的预约记录中正在预约的书本记录
-                $num = Appointment::where('UserId', $idU)->where('status', '!=', '5')->count();
+                $num = Appointment::where('UserId', $idU)->where('status', '<', '5')->count();
                 // dd($num);
                 // 查看预约中的数量是否已达上限
                 if ($num > 2) {
@@ -129,7 +142,8 @@ class AppointmentController extends Controller
                     $B = Appointment::where('UserId', $idU)->where('BookId', $idB)->first();
                     if (!empty($B)) {
                         // 查看预约过这本书的记录是否都是已归还状态
-                        $numOK = Appointment::where('UserId', $idU)->where('BookId', $idB)->where('status', '!=', '5')->count();
+                        $numOK = Appointment::where('UserId', $idU)->where('BookId', $idB)->where('status', '<', '4')->count();
+                        // dd($numOK);
                         if (!empty($numOK)) {
                             // 正在预约中，预约失败
                             return redirect('user/books')->with('error', '您正在预约此书中，预约失败');
@@ -193,18 +207,48 @@ class AppointmentController extends Controller
     public function cancel($id)
     {
         $status = Appointment::where('id', $id)->value('status');
-        if($status == '3' || $status == '0'){
+        if ($status == '3' || $status == '0') {
             return redirect('user/booksAppointing')->with('error', '取消预约失败，您已正在借阅此书，请尽快归还');
-        }else{
-            $new = Appointment::where('id', $id)->update(['status' => '6']);
-            $data = Appointment::where('BookId', $new->BookId)->where('status','1')->first()->update(['status' => '2']);
+        } elseif ($status == '2') {
+            // 如果是在提醒时取消
+            Appointment::where('id', $id)->update(['status' => '6']);
+            // dd($status);
+            $new = Appointment::where('id', $id)->first();
+            $next = Appointment::where('BookId', $new->BookId)->where('status', '1')->first();
+            // 如果没有人预约
+            if (empty($next->id)) {
+                // 更新书本余量和书本状态
 
-            // 延时任务1
-            DelayOne::dispatch($data)->delay(Carbon::now()->addMinutes(2));
-        // 跳转到预约那里
-        return redirect('user/booksAppointing')->with('success', '取消预约成功');
+                // 找书的id
+                // $BookId = Appointment::where('id', $id)->value('BookId');
+                // 找书的存量
+                $save = Books::where('id', $new->BookId)->value('save');
+                $saves = $save + 1;
+                $ok = Books::where('id', $new->BookId)->update([
+                    'save' => $saves,
+                    'status' => '10',
+                ]);
+                return redirect('user/booksAppointing')->with('success', '取消预约成功');
+            } else {
+                // 如果又人预约
+                $data = Appointment::where('BookId', $new->BookId)->where('status', '1')->first()->update(['status', '2']);
+
+                // 发通知
+                Mail::send('emails.borrow', [
+                    'data' => $data
+                ], function ($message) use ($data) {
+                    $message->to($data->email)->subject('回复');
+                });
+                // 延时任务
+                return redirect('user/booksAppointing')->with('success', '取消预约成功');
+            }
+        } else {
+            // 如果只在排队中取消
+            Appointment::where('id', $id)->update(['status' => '6']);
+            return redirect('user/booksAppointing')->with('success', '取消预约成功');
         }
     }
+
 
     // 用户的历史预约记录
     public function history()
